@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的使用</title>
+</head>
+<body>
+    <div id="n_n">
+
+        <data_use></data_use>
+
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        let data_use = {
+            // template 相当于new Vue 中的el
+            template: `
+                <div @click="click">
+                    在组件中用组件的data
+                    <br>
+                    username：<span>{{ username }}</span>
+                </div>
+            `,
+            // data 的定义与new Vue 中的不同。
+            data: function() {
+                return {
+                    username: "Kevin",
+                }
+            },
+            methods: {
+                click(){
+                    alert("给你个response")
+                }
+            }
+        };
+        Vue.component('data_use', data_use);
+        new Vue({
+            el: "#n_n",
+            data: {},
+        })
+    </script>
+</body>
+</html>

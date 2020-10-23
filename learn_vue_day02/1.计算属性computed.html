@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 计算属性computed</title>
+</head>
+<body>
+<div id="a_a">
+    <p>{{ number }}</p>
+    <input type="button" value="+" @click="add">
+    <input type="button" value="-" @click="sub">
+    <!--   插值表达式支持简单的运算，不过一般运算都建议用computed，除非计算特别简单   -->
+    <p>十位：{{ parseInt(number / 10) }}</p>
+    <p>各位：{{ number % 10 }}</p>
+
+    <input type="number" v-model="shi" max="9" min="0">
+    <input type="number" v-model="ge" max="9" min="0">
+    <!--   利用computed属性计算   -->
+    <p>结果：{{ result }}</p>
+    <br>
+
+    <!--    setter和getter方法    -->
+    <!--    计算属性默认只有getter，也可以提供setter    -->
+    姓名：<input type="text" v-model="fullname"><br>
+    firstName: <span>{{ first_name }}</span><br>
+    lastName: <span>{{ last_name }}</span><br>
+</div>
+
+<script src="../js/vue.min.js"></script>
+<script>
+    new Vue({
+        el: "#a_a",
+        data: {
+            number: 66,
+            shi: "",
+            ge: "",
+            first_name: '',
+            last_name: '',
+        },
+        methods: {
+            add() {
+                this.number++;
+            },
+
+            sub() {
+                this.number--;
+            }
+        },
+        computed: {
+            result() {
+                return this.shi * 10 + +this.ge;
+            },
+            fullname: {
+                // getter
+                get: function () {
+                    return this.first_name + ' ' + this.last_name
+                },
+
+                // setter
+                set: function (new_name) {
+                    var names = new_name.split(' ');
+                    this.first_name = names[0];
+                    this.last_name = names[names.length - 1]
+                }
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

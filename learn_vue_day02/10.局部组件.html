@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>局部组件</title>
+</head>
+<body>
+    <div id="v_v">
+        <part></part>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+
+        let part = {
+            template: `
+                <div>
+                    局部组件
+                </div>
+            `
+        };
+
+        new Vue({
+            el: "#v_v",
+            data: {
+            },
+            components: {
+                'part': part,
+            }
+        })
+    </script>
+</body>
+</html>

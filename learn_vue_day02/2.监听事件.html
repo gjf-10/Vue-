@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Watch</title>
+</head>
+<body>
+    <div id="e_e">
+        <p>{{ number }}</p>
+        <p>十位：{{ tens }}</p>
+        <p>个位：{{ units }}</p>
+        <input type="button" value="-" @click="sub">
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: "#e_e",
+            data: {
+                number: 99,
+                tens: "",
+                units: "",
+            },
+
+            methods: {
+                sub(){
+                    this.number--;
+                }
+            },
+
+            watch: {
+                // number 是监听的值， 如果number的值在vue的实例中发生改变，则会触发该监听事件。
+                number() {
+                    this.tens = parseInt(this.number / 10);
+                    this.units = this.number % 10;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

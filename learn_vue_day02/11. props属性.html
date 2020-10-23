@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>props属性</title>
+    <style>
+        #color{
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="i_i">
+        <com id="color" user="tom"></com>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+
+        let com = {
+            template: `
+                <div>
+                    <div :id="css">子组件</div>
+                </div>
+            `,
+            props: ["css", "user"],
+            created(){
+                console.log(this.user);
+            }
+        };
+
+        new Vue({
+            el: "#i_i",
+            data: {},
+            components: {
+                "com": com,
+            },
+        })
+    </script>
+</body>
+</html>

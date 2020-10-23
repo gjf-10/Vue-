@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue路由的使用</title>
+</head>
+<body>
+    <!--
+      旧：定义组件，用components 的方式作为根组件的子组件
+      新：定义组件，将组件用路由的方式选择某个组件作为子组件
+      需要：1.定义子组件 2.给每个子组件配置路由 3.注入到根组件中 4.用<router-view>标签显示配置的组件
+      -->
+    <div id="seed">
+        <p>选择题</p>
+        <hr>
+
+        <router-link to="/first">A</router-link>
+        <router-link to="/second">B</router-link>
+
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script src="vue-router.3.0.1(1).js"></script>
+
+    <script>
+
+        // 定义子组件
+        let first = {
+            template: `
+                <div>
+                    路漫漫其修远兮，吾将上下而求索
+                </div>
+            `
+        };
+
+        let second = {
+            template: `
+                <div>
+                    疾如风徐如林侵略如火不动如山——果断
+                </div>
+            `
+        };
+        let another = {
+            template: `
+                <div>
+                    上善若水，水利万物而不争
+                </div>
+            `
+        }
+        let third = {
+            template:`
+                <div>
+                    若这是连续的，那就值得认真对待
+                            ————生命，时间，
+                </div>
+            `
+        };
+        // 为每个组件配置路由
+
+        let myRouter = new VueRouter({
+           routes: [
+               {path: "/first", component: first},
+               {path: "/second", component: second},
+               {path: "/", component: another},
+               {path: "/*", component: third},
+           ]
+        });
+
+        new Vue({
+            el: "#seed",
+            data: {},
+            router: myRouter,
+        })
+
+    </script>
+</body>
+</html>

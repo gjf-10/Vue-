@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>router+组件</title>
+</head>
+<body>
+    <div id="unique">
+        <h3>系统页面</h3>
+        <router-link to="/member">会员</router-link>
+        <router-link to="/visitor">普通用户</router-link>
+        <hr>
+
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script src="vue-router.3.0.1(1).js"></script>
+
+    <script>
+        let member = {
+            template: `
+                <div>
+                    <h4>尊贵的客人</h4>
+                </div>
+            `
+        };
+
+        let visitor = {
+            template: `
+                <div>
+                    <h4>欢迎光临</h4>
+                </div>
+            `
+        };
+        let route = new VueRouter({
+            routes : [
+                {path: "/member", component: member},
+                {path: "/visitor", component: visitor},
+                {path: "/", component: visitor},
+                {path: "/*", component: visitor},
+            ]
+        });
+
+        new Vue({
+            el: "#unique",
+            data: {},
+            router: route,
+        })
+
+
+    </script>
+</body>
+</html>

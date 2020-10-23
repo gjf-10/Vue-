@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局组件</title>
+</head>
+<body>
+    <div id="r_r">
+        <!--   组件使用     -->
+        <first></first>
+
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        // 定义组件名
+        let first = {
+            template:`
+                <div>这是第一次定义组件</div>
+            `,
+        };
+
+        // 组件的注册，全局组件
+        Vue.component("first", first);
+        new Vue({
+            el: "#r_r",
+            data:{},
+        })
+    </script>
+</body>
+</html>

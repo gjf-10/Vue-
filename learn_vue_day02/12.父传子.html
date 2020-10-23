@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父传子</title>
+</head>
+<body>
+    <div id="t_t">
+        <input type="text" v-model="name">
+        <br>
+        父name:{{ name }}
+
+        <com :username="name"></com>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+
+        let com = {
+            template: `
+                <div>
+                    子组件
+                    <div>username的值：{{ username }}</div>
+                </div>
+            `,
+            props: ['username']
+        }
+        new Vue({
+            el: "#t_t",
+            data: {
+                name: "",
+            },
+            components: {
+                "com": com,
+            }
+
+        })
+    </script>
+</body>
+</html>

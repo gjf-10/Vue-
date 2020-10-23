@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子传父</title>
+</head>
+<body>
+<!--
+v-on 算是el为代表的vue实例所有的属性吧，它是监听事件发生的标志；用它监听子组件的事件
+
+1. v-on 绑定了某个事件  v-on应该是$on 实现的表现结果吧
+2.每个Vue实例都实现了事件的接口
+3. 父组件可以在使用子组件的地方（一对标签）使用v-on监听子组件触发的事件
+
+有以上的三个功能，但连接点是什么？
+正常格式：v-on:事件=“处理事件的方法”
+连接点也在事件，
+子组件中定义事件和父组件定义事件的方式一样，不过子组件定义的事件只有使用$emit()方法才能触发事件的发生；
+$emit(eventName, args) 事件名（给子组件写的事件起个别名起个连接作用）参数应该可以是正常方法传参时的类型吧。
+子组件可以利用父组件中v-on监听来给父组件用参数的方式传值。
+就像通信需要媒介，子组件要通过emit来告诉父组件
+
+-->
+    <div id="v_v">
+        父组件：{{ str }}
+        <!--  btn在子组件com用  -->
+        <com @btn="click"></com>
+
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+
+        let com = {
+            template: `
+                <div>
+                    子组件
+                    <button @click="click">surprise</button>
+                </div>
+            `,
+            data: function(){
+                return {
+                    number: 1
+                }
+            },
+            methods: {
+                click(){
+                    this.$emit("btn", this.number)
+                }
+            }
+        };
+
+        new Vue({
+            el: "#v_v",
+            data: {
+                str: '',
+            },
+            components: {
+                "com": com,
+            },
+            methods: {
+                // 响应v-on监听的事件
+                // 从上到下还是从下倒上好呢
+                // 树的建立，先建立根节点，然后才能建立子节点
+                // 从上到下的执行先建立了DOM树
+                // 执行到script，顺序执行，有了com这个组件，可以当成一个节点
+                // 接下来时根组件，初始化，创建，编译，挂载，等之后用替换标签。
+                click(str){
+                    // alert(str);
+                    this.str=str;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

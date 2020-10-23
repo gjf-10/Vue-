@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由参数传递</title>
+</head>
+<body>
+    <div id="express">
+
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script src="vue-router.3.0.1(1).js"></script>
+    <script>
+        let first = {
+            template: `
+                <div>
+                    这是组件一的作用范围
+<!--                    <router-link to="/second?id=3&name=tom">11</router-link>-->
+                    <router-link to="/second?id=3&name=tom">去看看组件二吧？记得带点东西哦</router-link>
+                </div>
+            `,
+        };
+
+        let second = {
+            template: `
+                <div>
+                    这是组件二的作用范围，
+                    来就来，还带什么东西
+                    <p>{{ $route.query.id }} and {{ $route.query.name }}</p>
+                </div>
+            `,
+        };
+        let route = new VueRouter({
+            routes: [
+                {path: "/first", component:first},
+                {path: "/second", component:second},
+                {path: "/", component:first},
+            ]
+        });
+        new Vue({
+            el: "#express",
+            data: {},
+            router: route,
+        })
+    </script>
+</body>
+</html>

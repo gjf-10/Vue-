@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期钩子</title>
+</head>
+<body>
+    <div id="h_h">
+
+        <span id="span">{{ number }}</span>
+        <h4 @click="click" id="h">11</h4>
+
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        // vue 实例初始化，编译el所表示的html，创建{{}}这种能取待的方式，用vue实例将html中的内容取代。每次updatehtml中的data之前都是先update vue实例中的data
+        new Vue({
+            el: "#h_h",
+            data: {
+                number: 11,
+            },
+            methods: {
+                click(){
+                    this.number++;
+                },
+            },
+            // 显示init events&Lifecircle
+            // beforeCreate 在实例初始化之后，数据data和 event/watcher 事件配置之前被调用
+            beforeCreate: function(){
+                console.log("vue实例对象初始化之前beforeCreate：" + this.number)
+                // vue实例对象初始化之前beforeCreate：undefined
+                console.log(document.getElementById('h_h'))
+                /*
+                <div id=​"h_h">​
+                    <span id=​"span">​{{ number }}</span>​
+                    <h4 id=​"h">​11​</h4>​
+                </div>​
+                 */
+            },
+
+            //在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测 (data observer)，property 和方法的运算，watch/event 事件回调;
+            // 挂载阶段还没开始，$el property 目前尚不可用
+            // created $el property 目前尚不可用,即 {{}} 这个还没起作用，只是data中的number完成了配置
+            created: function(){
+                console.log("vue实例的数据完成了初始化：" + this.number)
+                // data中的数据完成了配置 number是11
+                console.log(document.getElementById('h_h'))
+                /*
+                //{{ number }}， {{}} 没起作用
+                <div id=​"h_h">​
+                    <span id=​"span">​{{ number }}</span>​
+                    <h4 id=​"h">​11​</h4>​
+                </div>​
+                 */
+            },
+
+
+            //  created之后compile el's outerHTML as template(没有模板)/ compile template into render function(有模板)
+            // beforeMount()执行时，要挂载的模板也就是一个加工后的html已经就绪了，
+            // 挂载Mount 就是创建vm.$el,用新的html取代原来el位置的html
+            // 挂载create vm.$el and replace "el" with it
+            // mounted() 挂载后，el取代后的状态
+
+            // 在挂载开始之前被调用：相关的 render 函数首次被调用。
+            beforeMount(){
+                console.log("vue实例被编译之前：");
+                console.log(document.getElementById('h_h'))
+                /*
+                <div id=​"h_h">​
+                    <span id=​"span">​{{ number }}</span>​
+                    <h4 id=​"h">​11​</h4>​
+                </div>​
+                */
+            },
+
+            // 实例被挂载后调用，这时 el 被新创建的 vm.$el 替换了。
+            mounted(){
+                console.log("vue实例编译完成")
+                console.log(document.getElementById('h_h'))
+                /*
+                <div id=​"h_h">​
+                    <span id=​"span">​11</span>​
+                    <h4 id=​"h">​11​</h4>​
+                </div>​
+                 */
+            },
+
+            // beforeUpdate() 只更新了vue实例对象的data
+            beforeUpdate() {
+                console.log("beforeUpdate, vue实例对象的data数据：", this.number)
+                // beforeUpdate, vue实例对象的data数据： 12
+                console.log("beforeUpdate, html中的data数据：", document.getElementById('span').innerText)
+                // beforeUpdate, html中的data数据： 11
+            },
+
+            // updated html中的数据也更新了
+            updated() {
+                console.log("updated: " + this.number)
+                // updated: 12
+                console.log("updated: " + document.getElementById("span").innerText)
+                // updated: 12
+        },
+        })
+    </script>
+</body>
+</html>

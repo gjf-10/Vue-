@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态路由传参</title>
+</head>
+<body>
+    <div id="jane">
+
+        <router-view></router-view>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script src="vue-router.3.0.1(1).js"></script>
+
+    <script>
+        let first = {
+            template: `
+                <div>
+                    第一个组件
+                    <p>欢迎回来{{ $route.params.id }} name: {{ $route.params.name }}</p>
+                    <router-link to="/second/3/tom">世界这么大，我想去看看</router-link>
+                </div>
+            `
+        }
+        let second = {
+            template: `
+                <div>
+                    第二个组件
+                    <p>欢迎光临 id：{{ $route.params.id }} name：{{ $route.params.name }}</p>
+                    <router-link to="/first/1/jane">家里这么好，我随时都能回的去</router-link>
+                </div>
+            `
+        }
+
+        let route = new VueRouter({
+            routes: [
+                {path: "/first/:id/:name", component: first},
+                {path: "/second/:id/:name", component: second},
+                {path: "/", component: first},
+            ]
+        })
+
+        new Vue({
+            el: "#jane",
+            data:{},
+            router: route,
+        })
+    </script>
+</body>
+</html>
